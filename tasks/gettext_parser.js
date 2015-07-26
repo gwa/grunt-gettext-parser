@@ -1,6 +1,6 @@
 /*
  * grunt-gettext-parser
- * https://github.com/groves/gettext-parser
+ * https://github.com/gwa/gettext-parser
  *
  * Copyright (c) 2015 Great White Ark
  * Licensed under the MIT license.
