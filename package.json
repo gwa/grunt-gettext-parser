@@ -1,0 +1,37 @@
+{
+  "name": "grunt-gettext-parser",
+  "description": "Extract gettext calls from WordPress / Timber templates to a single PHP file.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/groves/gettext-parser",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gwa/grunt-gettext-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gwa/grunt-gettext-parser/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/gwa/grunt-gettext-parser/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt": "~0.4.5"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
