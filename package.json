@@ -3,6 +3,11 @@
   "description": "Extract gettext calls from WordPress / Timber templates to a single PHP file.",
   "version": "0.1.0",
   "homepage": "https://github.com/groves/gettext-parser",
+  "author": {
+    "name": "Great White Ark",
+    "email": "groves@greatwhiteark.com",
+    "url": "http://www.greatwhiteark.com"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/gwa/grunt-gettext-parser.git"
