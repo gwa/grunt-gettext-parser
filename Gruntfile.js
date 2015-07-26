@@ -2,7 +2,7 @@
  * grunt-gettext-parser
  * https://github.com/gwa/grunt-gettext-parser
  *
- * Copyright (c) 2015 Timothy Groves
+ * Copyright (c) 2015 Great White Ark
  * Licensed under the MIT license.
  */
 
