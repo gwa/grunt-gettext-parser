@@ -17,6 +17,7 @@ results in:
 ```php
 <?php
 gettext('my text');
+```
 
 ### Drupal
 
