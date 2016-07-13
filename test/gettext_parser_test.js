@@ -30,13 +30,17 @@ exports.gettext_parser = {
   },
 
   default_options: function(test) {
-    test.expect(1);
+    test.expect(2);
 
-    var actual = grunt.file.read('tmp/default_options.php');
-    var expected = grunt.file.read('test/expected/default_options.php');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    var actual = grunt.file.read('tmp/wordpress.php');
+    var expected = grunt.file.read('test/expected/wordpress.php');
+    test.equal(actual, expected, 'parses and extracts gettext calls from wordpress PHP and twig files.');
+
+    var actual = grunt.file.read('tmp/drupal.php');
+    var expected = grunt.file.read('test/expected/drupal.php');
+    test.equal(actual, expected, 'parses and extracts gettext calls from drupal twig files.');
 
     test.done();
   },
-  
+
 };
