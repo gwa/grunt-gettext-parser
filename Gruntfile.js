@@ -30,12 +30,20 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     gettext_parser: {
-      default_options: {
+      wordpress: {
         options: {
             textdomain: 'bar',
         },
         files: {
-          'tmp/default_options.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+          'tmp/wordpress.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+        }
+      },
+      drupal: {
+        options: {
+            style: 'drupal',
+        },
+        files: {
+          'tmp/drupal.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
         }
       }
     },

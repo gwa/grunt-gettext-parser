@@ -1,6 +1,38 @@
 # grunt-gettext-parser
 
-Extracts `gettext` calls for a specified textdomain from [twig](http://twig.sensiolabs.org/) templates in the [Timber](http://upstatement.com/timber/) framework to a single PHP file.
+A grunt task that parses `gettext` calls from [twig](http://twig.sensiolabs.org/) ([Timber](http://upstatement.com/timber/) for Wordpress, or Drupal 8) files and creates a "dummy" PHP file with gettext calls that can then be used to create a `.pot` or `.po` file.
+
+### Wordpress
+
+Running the task in `wordpress` mode for the `mydomain` text domain on the following:
+
+```markup
+<!-- twig template for Timer -->
+<span>{{ __('my text', 'mydomain') }}</span>
+<span>{{ __('other text', 'otherdomain') }}</span>
+```
+
+results in:
+
+```php
+<?php
+gettext('my text');
+
+### Drupal
+
+Running the task in `drupal` on the following:
+
+```markup
+<!-- Drupal 8 module twig template -->
+<span>{{ 'my text'|t }}</span>
+```
+
+also results in:
+
+```php
+<?php
+gettext('my text');
+```
 
 [grunt-pot](https://www.npmjs.com/package/grunt-pot) can subsequently be used to create a `.pot` file and update any existing `.po` files.
 
@@ -31,6 +63,7 @@ grunt.initConfig({
     gettext_parser: {
         your_target: {
             options: {
+                style: 'wordpress',
                 textdomain: 'mydomain'
             },
             'path/to/output.php': ['views/**/*.twig']
@@ -41,9 +74,13 @@ grunt.initConfig({
 
 ### Options
 
+#### style
+
+`wordpress` (default) or `drupal`.
+
 #### textdomain
 
-The textdomain to be parsed. gettext calls to other domains will be ignored. Set to `null` to parse all text domains.
+Wordpress only: The textdomain to be parsed. gettext calls to other domains will be ignored. Set to `null` to parse all text domains.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
