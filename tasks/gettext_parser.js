@@ -14,14 +14,16 @@ module.exports = function(grunt) {
     // creation: http://gruntjs.com/creating-tasks
 
     var PATTERN_WORDPRESS = /_[_e]\((['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
-        PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g');
+        PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
+        OPTIONS = {};
 
     grunt.registerMultiTask('gettext_parser', 'Extract gettext calls to a single file.', function() {
 
-        // Merge task-specific and/or target-specific options with these defaults.
-        var options = this.options({
+        // Merge task-specific and/or target-specific OPTIONS with these defaults.
+        OPTIONS = this.options({
             style: 'wordpress',
-            textdomain: null
+            textdomain: null,
+            output_function: 'gettext'
         });
 
         // Iterate over all specified file groups.
@@ -30,14 +32,14 @@ module.exports = function(grunt) {
             // Concat specified files.
             var files = f.src.filter(filterFilepath),
                 calls = [],
-                pattern = getPattern(options.style),
+                pattern = getPattern(OPTIONS.style),
                 output = '<?php\n';
 
             files.forEach(function(filepath) {
                 var i,
                     filecalls;
 
-                filecalls = getCallsInFile(filepath, pattern, options.textdomain);
+                filecalls = getCallsInFile(filepath, pattern, OPTIONS.textdomain);
                 for (i in filecalls) {
                     calls.push(filecalls[i]);
                 }
@@ -124,7 +126,7 @@ module.exports = function(grunt) {
      * @return {String}
      */
     function getGettextCall(slug) {
-        return "gettext('" + slug + "')";
+        return OPTIONS.output_function + "('" + slug + "')";
     }
 
 };

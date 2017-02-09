@@ -83,5 +83,11 @@ grunt.initConfig({
 
 Wordpress only: The textdomain to be parsed. gettext calls to other domains will be ignored. Set to `null` to parse all text domains.
 
+#### output_function
+
+`gettext` (default)
+
+The function name that is used in the generated php file.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
