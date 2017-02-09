@@ -1,5 +1,7 @@
 # grunt-gettext-parser
 
+[![Build Status](https://travis-ci.org/gwa/grunt-gettext-parser.svg?branch=master)](https://travis-ci.org/gwa/grunt-gettext-parser)
+
 > Extract gettext calls from templates to a single PHP file that can then be used to create a `.po` file for translations.
 
 A grunt task that parses `gettext` calls from [twig](http://twig.sensiolabs.org/) ([Timber](http://upstatement.com/timber/) for Wordpress, or Drupal 8) files and creates a "dummy" PHP file with gettext calls that can then be used to create a `.pot` or `.po` file.
@@ -57,6 +59,7 @@ grunt.loadNpmTasks('grunt-gettext-parser');
 ## The "gettext_parser" task
 
 ### Overview
+
 In your project's Gruntfile, add a section named `gettext_parser` to the data object passed into `grunt.initConfig()`.
 
 ```js
@@ -65,7 +68,9 @@ grunt.initConfig({
         your_target: {
             options: {
                 style: 'wordpress',
-                textdomain: 'mydomain'
+                textdomain: 'mydomain',
+                // Defaults to gettext
+                output_function: 'myFunction'
             },
             'path/to/output.php': ['views/**/*.twig']
         },
