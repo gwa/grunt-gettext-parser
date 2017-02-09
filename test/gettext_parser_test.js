@@ -36,9 +36,19 @@ exports.gettext_parser = {
     var expected = grunt.file.read('test/expected/wordpress.php');
     test.equal(actual, expected, 'parses and extracts gettext calls from wordpress PHP and twig files.');
 
-    var actual = grunt.file.read('tmp/drupal.php');
-    var expected = grunt.file.read('test/expected/drupal.php');
+    actual = grunt.file.read('tmp/drupal.php');
+    expected = grunt.file.read('test/expected/drupal.php');
     test.equal(actual, expected, 'parses and extracts gettext calls from drupal twig files.');
+
+    test.done();
+  },
+
+  custom_function_option: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/wordpress_custom_function.php');
+    var expected = grunt.file.read('test/expected/wordpress_custom_function.php');
+    test.equal(actual, expected, 'writes a custom function call .');
 
     test.done();
   },

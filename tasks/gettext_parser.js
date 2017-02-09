@@ -15,12 +15,12 @@ module.exports = function(grunt) {
 
     var PATTERN_WORDPRESS = /_[_e]\((['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
         PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
-        OPTIONS = {};
+        options = {};
 
     grunt.registerMultiTask('gettext_parser', 'Extract gettext calls to a single file.', function() {
 
-        // Merge task-specific and/or target-specific OPTIONS with these defaults.
-        OPTIONS = this.options({
+        // Merge task-specific and/or target-specific options with these defaults.
+        options = this.options({
             style: 'wordpress',
             textdomain: null,
             output_function: 'gettext'
@@ -32,14 +32,14 @@ module.exports = function(grunt) {
             // Concat specified files.
             var files = f.src.filter(filterFilepath),
                 calls = [],
-                pattern = getPattern(OPTIONS.style),
+                pattern = getPattern(options.style),
                 output = '<?php\n';
 
             files.forEach(function(filepath) {
                 var i,
                     filecalls;
 
-                filecalls = getCallsInFile(filepath, pattern, OPTIONS.textdomain);
+                filecalls = getCallsInFile(filepath, pattern, options.textdomain);
                 for (i in filecalls) {
                     calls.push(filecalls[i]);
                 }
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
      * @return {String}
      */
     function getGettextCall(slug) {
-        return OPTIONS.output_function + "('" + slug + "')";
+        return options.output_function + "('" + slug + "')";
     }
 
 };
