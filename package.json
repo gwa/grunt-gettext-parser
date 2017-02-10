@@ -1,7 +1,7 @@
 {
   "name": "grunt-gettext-parser",
-  "description": "Extract gettext calls from WordPress / Timber templates to a single PHP file.",
-  "version": "0.3.2",
+  "description": "Extract gettext calls from twig templates to a single PHP file.",
+  "version": "0.4.0",
   "homepage": "https://github.com/groves/gettext-parser",
   "author": {
     "name": "Great White Ark",
@@ -28,7 +28,6 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-nodeunit": "^0.3.3",
     "grunt": "~0.4.5"
