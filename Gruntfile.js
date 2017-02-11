@@ -12,18 +12,6 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    jshint: {
-      files: {
-        src: [
-          'Gruntfile.js',
-          'tasks/*.js',
-          '<%= nodeunit.tests %>'
-        ]
-      },
-      options: {
-        jshintrc: '.jshintrc'
-      }
-    },
 
     // Before generating any new files, remove any previously-created files.
     clean: {
@@ -40,6 +28,17 @@ module.exports = function(grunt) {
           'tmp/wordpress.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
         }
       },
+
+      wordpress_add_textdomain: {
+        options: {
+            textdomain: 'bar',
+            add_textdomain: true
+        },
+        files: {
+          'tmp/wordpress_add_textdomain.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+        }
+      },
+
       wordpress_custom_function: {
         options: {
             textdomain: 'bar',
@@ -49,6 +48,7 @@ module.exports = function(grunt) {
           'tmp/wordpress_custom_function.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
         }
       },
+
       drupal: {
         options: {
             style: 'drupal',

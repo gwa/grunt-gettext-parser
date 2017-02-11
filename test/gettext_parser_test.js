@@ -43,12 +43,22 @@ exports.gettext_parser = {
     test.done();
   },
 
+  add_textdomain: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/wordpress_add_textdomain.php');
+    var expected = grunt.file.read('test/expected/wordpress_add_textdomain.php');
+    test.equal(actual, expected, 'adds the textdomain to the rendered functions.');
+
+    test.done();
+  },
+
   custom_function_option: function(test) {
     test.expect(1);
 
     var actual = grunt.file.read('tmp/wordpress_custom_function.php');
     var expected = grunt.file.read('test/expected/wordpress_custom_function.php');
-    test.equal(actual, expected, 'writes a custom function call .');
+    test.equal(actual, expected, 'writes a custom function call.');
 
     test.done();
   },
