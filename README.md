@@ -92,7 +92,11 @@ Wordpress only: The textdomain to be parsed. gettext calls to other domains will
 
 `gettext` (default)
 
-The function name that is used in the generated php file.
+#### add_textdomain
+
+`false` (default)
+
+Write the textdomain to the php file. Helpful for use with checktextdomain libraries.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

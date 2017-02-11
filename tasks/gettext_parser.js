@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
-    var PATTERN_WORDPRESS = /_[_e]\((['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
+    var PATTERN_WORDPRESS = /_[_e]\(\s?(['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
         PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
         options = {};
 
@@ -23,7 +23,8 @@ module.exports = function(grunt) {
         options = this.options({
             style: 'wordpress',
             textdomain: null,
-            output_function: 'gettext'
+            output_function: 'gettext',
+            add_textdomain: false
         });
 
         // Iterate over all specified file groups.
@@ -118,15 +119,19 @@ module.exports = function(grunt) {
      * @return {String}
      */
     function formatGettextMatch(match) {
-        return getGettextCall(match[2]);
+        return getGettextCall(match[2], match[3]);
     }
 
     /**
      * @param {String} slug
      * @return {String}
      */
-    function getGettextCall(slug) {
-        return options.output_function + "('" + slug + "')";
+    function getGettextCall(slug, textdomain) {
+        if( options.add_textdomain ) {
+            return options.output_function + "('" + slug + "', '" + textdomain + "')";
+        } else {
+            return options.output_function + "('" + slug + "')";
+        }
     }
 
 };
