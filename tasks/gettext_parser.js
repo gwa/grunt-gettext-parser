@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
-    var PATTERN_WORDPRESS = /_[_e]\(\s?(['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
+    var PATTERN_WORDPRESS = /_[_e]\(\s?(['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*\s?)\1/g,
         PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
         options = {};
 
