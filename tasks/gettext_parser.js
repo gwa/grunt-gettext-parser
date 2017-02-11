@@ -14,14 +14,16 @@ module.exports = function(grunt) {
     // creation: http://gruntjs.com/creating-tasks
 
     var PATTERN_WORDPRESS = /_[_e]\((['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
-        PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g');
+        PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
+        options = {};
 
     grunt.registerMultiTask('gettext_parser', 'Extract gettext calls to a single file.', function() {
 
         // Merge task-specific and/or target-specific options with these defaults.
-        var options = this.options({
+        options = this.options({
             style: 'wordpress',
-            textdomain: null
+            textdomain: null,
+            output_function: 'gettext'
         });
 
         // Iterate over all specified file groups.
@@ -124,7 +126,7 @@ module.exports = function(grunt) {
      * @return {String}
      */
     function getGettextCall(slug) {
-        return "gettext('" + slug + "')";
+        return options.output_function + "('" + slug + "')";
     }
 
 };

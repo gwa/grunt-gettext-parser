@@ -1,5 +1,9 @@
 # grunt-gettext-parser
 
+[![Build Status](https://travis-ci.org/gwa/grunt-gettext-parser.svg?branch=master)](https://travis-ci.org/gwa/grunt-gettext-parser)
+
+> Extract gettext calls from templates to a single PHP file that can then be used to create a `.po` file for translations.
+
 A grunt task that parses `gettext` calls from [twig](http://twig.sensiolabs.org/) ([Timber](http://upstatement.com/timber/) for Wordpress, or Drupal 8) files and creates a "dummy" PHP file with gettext calls that can then be used to create a `.pot` or `.po` file.
 
 ### Wordpress
@@ -17,6 +21,7 @@ results in:
 ```php
 <?php
 gettext('my text');
+```
 
 ### Drupal
 
@@ -36,8 +41,6 @@ gettext('my text');
 
 [grunt-pot](https://www.npmjs.com/package/grunt-pot) can subsequently be used to create a `.pot` file and update any existing `.po` files.
 
-> Extract gettext calls from templates to a single file.
-
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
 
@@ -56,6 +59,7 @@ grunt.loadNpmTasks('grunt-gettext-parser');
 ## The "gettext_parser" task
 
 ### Overview
+
 In your project's Gruntfile, add a section named `gettext_parser` to the data object passed into `grunt.initConfig()`.
 
 ```js
@@ -64,7 +68,9 @@ grunt.initConfig({
         your_target: {
             options: {
                 style: 'wordpress',
-                textdomain: 'mydomain'
+                textdomain: 'mydomain',
+                // Defaults to gettext
+                output_function: 'myFunction'
             },
             'path/to/output.php': ['views/**/*.twig']
         },
@@ -81,6 +87,12 @@ grunt.initConfig({
 #### textdomain
 
 Wordpress only: The textdomain to be parsed. gettext calls to other domains will be ignored. Set to `null` to parse all text domains.
+
+#### output_function
+
+`gettext` (default)
+
+The function name that is used in the generated php file.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

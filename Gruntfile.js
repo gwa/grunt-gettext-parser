@@ -13,11 +13,13 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>'
-      ],
+      files: {
+        src: [
+          'Gruntfile.js',
+          'tasks/*.js',
+          '<%= nodeunit.tests %>'
+        ]
+      },
       options: {
         jshintrc: '.jshintrc'
       }
@@ -36,6 +38,15 @@ module.exports = function(grunt) {
         },
         files: {
           'tmp/wordpress.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+        }
+      },
+      wordpress_custom_function: {
+        options: {
+            textdomain: 'bar',
+            output_function: 'fooMethod',
+        },
+        files: {
+          'tmp/wordpress_custom_function.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
         }
       },
       drupal: {
