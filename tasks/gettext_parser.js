@@ -2,28 +2,27 @@
  * grunt-gettext-parser
  * https://github.com/gwa/grunt-gettext-parser
  *
- * Copyright (c) 2015 Great White Ark
+ * Copyright (c) 2017 Great White Ark
  * Licensed under the MIT license.
  */
 
 'use strict';
 
 module.exports = function(grunt) {
-
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
-    var PATTERN_WORDPRESS = /_[_e]\((['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*)\1/g,
+    var PATTERN_WORDPRESS = /_[_e]\(\s?(['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*\s?)\1/g,
         PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
         options = {};
 
     grunt.registerMultiTask('gettext_parser', 'Extract gettext calls to a single file.', function() {
-
         // Merge task-specific and/or target-specific options with these defaults.
         options = this.options({
             style: 'wordpress',
             textdomain: null,
-            output_function: 'gettext'
+            output_function: 'gettext',
+            add_textdomain: false
         });
 
         // Iterate over all specified file groups.
@@ -55,7 +54,6 @@ module.exports = function(grunt) {
             // Print a success message.
             grunt.log.writeln('File "' + f.dest + '" created.');
         });
-
     });
 
     /**
@@ -80,9 +78,9 @@ module.exports = function(grunt) {
         if (!grunt.file.exists(filepath)) {
             grunt.log.warn('Source file "' + filepath + '" not found.');
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -118,15 +116,18 @@ module.exports = function(grunt) {
      * @return {String}
      */
     function formatGettextMatch(match) {
-        return getGettextCall(match[2]);
+        return getGettextCall(match[2], match[3]);
     }
 
     /**
      * @param {String} slug
      * @return {String}
      */
-    function getGettextCall(slug) {
+    function getGettextCall(slug, textdomain) {
+        if (options.add_textdomain) {
+            return options.output_function + "('" + slug + "', '" + textdomain + "')";
+        }
+
         return options.output_function + "('" + slug + "')";
     }
-
 };
