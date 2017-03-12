@@ -4,7 +4,31 @@
 
 > Extract gettext calls from templates to a single PHP file that can then be used to create a `.po` file for translations.
 
-A grunt task that parses `gettext` calls from [twig](http://twig.sensiolabs.org/) ([Timber](http://upstatement.com/timber/) for Wordpress, or Drupal 8) files and creates a "dummy" PHP file with gettext calls that can then be used to create a `.pot` or `.po` file.
+A grunt task that parses `gettext` calls from [twig](http://twig.sensiolabs.org/) ([i18n Extension](http://twig-extensions.readthedocs.io/en/latest/i18n.html), [Timber](http://upstatement.com/timber/) for Wordpress, or Drupal 8) files and creates a "dummy" PHP file with gettext calls.
+
+The dummy file can then be parsed [using grunt-pot](https://www.npmjs.com/package/grunt-pot) to create a `.pot` or `.po` file.
+
+### i18n
+
+Running the task in `i18n` mode on the following:
+
+```markup
+<!-- twig template with i18n extension -->
+<span>{{ trans "my text" }}</span>
+<div>
+{% trans %}
+    other text with a {{ variable }}
+{% endtrans %}
+</div>
+```
+
+results in:
+
+```php
+<?php
+gettext('my text');
+gettext('other text with a %variable%');
+```
 
 ### Wordpress
 
@@ -23,9 +47,11 @@ results in:
 gettext('my text');
 ```
 
+(Note that `otherdomain` translations are excluded.)
+
 ### Drupal
 
-Running the task in `drupal` on the following:
+Running the task in `drupal` mode on the following:
 
 ```markup
 <!-- Drupal 8 module twig template -->
@@ -69,7 +95,7 @@ grunt.initConfig({
             options: {
                 style: 'wordpress',
                 textdomain: 'mydomain',
-                // Defaults to gettext
+                // Changes the name of the rendered function. Defaults to `gettext`.
                 output_function: 'myFunction'
             },
             'path/to/output.php': ['views/**/*.twig']

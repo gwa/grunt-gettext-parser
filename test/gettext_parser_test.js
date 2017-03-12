@@ -30,7 +30,7 @@ exports.gettext_parser = {
   },
 
   default_options: function(test) {
-    test.expect(2);
+    test.expect(3);
 
     var actual = grunt.file.read('tmp/wordpress.php');
     var expected = grunt.file.read('test/expected/wordpress.php');
@@ -39,6 +39,10 @@ exports.gettext_parser = {
     actual = grunt.file.read('tmp/drupal.php');
     expected = grunt.file.read('test/expected/drupal.php');
     test.equal(actual, expected, 'parses and extracts gettext calls from drupal twig files.');
+
+    actual = grunt.file.read('tmp/i18n.php');
+    expected = grunt.file.read('test/expected/i18n.php');
+    test.equal(actual, expected, 'parses and extracts gettext calls from twig files using the i18n extension.');
 
     test.done();
   },

@@ -8,13 +8,15 @@
 
 'use strict';
 
+var ParserWordpress = require('./parser/parser_wordpress');
+var ParserDrupal = require('./parser/parser_drupal');
+var ParserI18n = require('./parser/parser_i18n');
+
 module.exports = function(grunt) {
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
-    var PATTERN_WORDPRESS = /_[_e]\(\s?(['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*\s?)\1/g,
-        PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
-        options = {};
+    var options = {};
 
     grunt.registerMultiTask('gettext_parser', 'Extract gettext calls to a single file.', function() {
         // Merge task-specific and/or target-specific options with these defaults.
@@ -27,26 +29,24 @@ module.exports = function(grunt) {
 
         // Iterate over all specified file groups.
         this.files.forEach(function(f) {
-
-            // Concat specified files.
             var files = f.src.filter(filterFilepath),
+                parser = getParser(options.style),
                 calls = [],
-                pattern = getPattern(options.style),
                 output = '<?php\n';
 
             files.forEach(function(filepath) {
                 var i,
-                    filecalls;
+                    filecalls = parser.parse(grunt.file.read(filepath));
 
-                filecalls = getCallsInFile(filepath, pattern, options.textdomain);
                 for (i in filecalls) {
                     calls.push(filecalls[i]);
                 }
             });
 
-
-            output += calls.join(';\n');
-            output += ';\n';
+            if (calls.length) {
+                output += calls.join(';\n');
+                output += ';\n';
+            }
 
             // Write the destination file.
             grunt.file.write(f.dest, output);
@@ -55,19 +55,6 @@ module.exports = function(grunt) {
             grunt.log.writeln('File "' + f.dest + '" created.');
         });
     });
-
-    /**
-     * @param {String} style
-     * @return {RegExp}
-     */
-    function getPattern(style) {
-        switch (style) {
-            case 'drupal':
-                return PATTERN_DRUPAL_TWIG;
-            default:
-                return PATTERN_WORDPRESS;
-        }
-    }
 
     /**
      * @param {String} filepath
@@ -84,50 +71,17 @@ module.exports = function(grunt) {
     }
 
     /**
-     * @param {String} filepath
-     * @param {String} pattern
-     * @param {String} textdomain
-     * @return {Array}
+     * @param {String} style
+     * @return {Object}
      */
-    function getCallsInFile(filepath, pattern, textdomain) {
-        var source = grunt.file.read(filepath),
-            match,
-            calls = [];
-
-        while (match = pattern.exec(source)) {
-            if (!textdomain || textdomain === getMatchedTextDomain(match)) {
-                calls.push(formatGettextMatch(match));
-            }
+    function getParser(style) {
+        switch (style) {
+            case 'i18n':
+                return new ParserI18n(options);
+            case 'drupal':
+                return new ParserDrupal(options);
+            default:
+                return new ParserWordpress(options);
         }
-
-        return calls;
-    }
-
-    /**
-     * @param {Array} match
-     * @return {String}
-     */
-    function getMatchedTextDomain(match) {
-        return match[3];
-    }
-
-    /**
-     * @param {Array} match
-     * @return {String}
-     */
-    function formatGettextMatch(match) {
-        return getGettextCall(match[2], match[3]);
-    }
-
-    /**
-     * @param {String} slug
-     * @return {String}
-     */
-    function getGettextCall(slug, textdomain) {
-        if (options.add_textdomain) {
-            return options.output_function + "('" + slug + "', '" + textdomain + "')";
-        }
-
-        return options.output_function + "('" + slug + "')";
     }
 };

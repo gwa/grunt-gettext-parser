@@ -1,7 +1,7 @@
 {
   "name": "grunt-gettext-parser",
-  "description": "Extract gettext calls from Wordpress themes and twig templates to a single PHP file.",
-  "version": "0.4.0",
+  "description": "Extract gettext calls from Twig templates to a single PHP file.",
+  "version": "0.5.0",
   "homepage": "https://github.com/groves/gettext-parser",
   "author": {
     "name": "Great White Ark",
@@ -15,12 +15,7 @@
   "bugs": {
     "url": "https://github.com/gwa/grunt-gettext-parser/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/gwa/grunt-gettext-parser/blob/master/LICENSE-MIT"
-    }
-  ],
+  "license": "MIT",
   "engines": {
     "node": ">= 0.8.0"
   },
