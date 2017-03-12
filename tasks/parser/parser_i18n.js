@@ -18,25 +18,39 @@ function Parser(options) {
         }
 
         while (match = PATTERN_MULTILINE.exec(source)) {
-            calls.push(
-                getGettextCall(
-                    parseMultilineMatch(match[1])
-                )
-            );
+            parseMultilineMatch(match[1]).forEach(function(value) {
+                calls.push(
+                    getGettextCall(value)
+                );
+            });
         }
 
         return calls;
     }
 
+    /**
+     * @param {String} source
+     * @return {Array}
+     */
     function parseMultilineMatch(source) {
-        var pattern = /{{ ?(.+?) ?}}/g,
-            match;
+        var pattern_variable = /{{ ?(.+?) ?}}/g,
+            pattern_plural = /{% plural .+? %}/gm,
+            match,
+            singular,
+            plural;
 
-        while (match = pattern.exec(source)) {
-            source = source.replace(match[0], '%' + match[1] + '%');
+        while (match = pattern_variable.exec(source)) {
+            source = source.replace(new RegExp(match[0], 'g'), '%' + match[1] + '%');
         }
 
-        return source.trim();
+        // Check for plural
+        if (match = pattern_plural.exec(source)) {
+            singular = source.substring(0, match.index).trim();
+            plural = source.substring(match.index + match[0].length).trim();
+            return[singular, plural];
+        }
+
+        return [source.trim()];
     }
 
     /**

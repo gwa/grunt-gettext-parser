@@ -13,3 +13,9 @@ Twig i18n style.
 {% trans %}
     Multiline translation with two {{ variables }} after {{ another }}.
 {% endtrans %}
+
+{% trans %}
+    Multiline translation with one {{ variable }}.
+{% plural count_variable %}
+    Multiline translation with {{ count }} {{ variable }}.
+{% endtrans %}
