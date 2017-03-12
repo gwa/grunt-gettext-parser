@@ -8,7 +8,7 @@ function Parser(options) {
      * @param {String} source
      * @return {Array}
      */
-    function parseCalls(source) {
+    function parse(source) {
         var match,
             calls = [];
 
@@ -24,20 +24,21 @@ function Parser(options) {
      * @return {String}
      */
     function formatGettextMatch(match) {
-        return getGettextCall(match[2], match[3]);
+        return getGettextCall(match[2]);
     }
 
     /**
      * @param {String} slug
      * @return {String}
      */
-    function getGettextCall(slug, textdomain) {
+    function getGettextCall(slug) {
         return options.output_function + "('" + slug + "')";
     }
 
     return {
-        parseCalls: parseCalls
+        parse: parse
     };
+
 }
 
 module.exports = Parser;

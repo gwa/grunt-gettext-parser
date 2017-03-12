@@ -1,3 +1,15 @@
 Twig i18n style.
 
 {% trans "Hello World!" %}
+
+{% trans %}
+    Multiline translation.
+{% endtrans %}
+
+{% trans %}
+    Multiline translation with a {{ variable }}.
+{% endtrans %}
+
+{% trans %}
+    Multiline translation with two {{ variables }} after {{ another }}.
+{% endtrans %}

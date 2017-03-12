@@ -10,14 +10,13 @@
 
 var ParserWordpress = require('./parser/parser_wordpress');
 var ParserDrupal = require('./parser/parser_drupal');
+var ParserI18n = require('./parser/parser_i18n');
 
 module.exports = function(grunt) {
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
-    var PATTERN_WORDPRESS = /_[_e]\(\s?(['"])((?:(?!\1).)*)\1,\s?\1((?:(?!\1).)*\s?)\1/g,
-        PATTERN_DRUPAL_TWIG = new RegExp('{{ ?([\'"])((?:(?!\\1).)*)\\1\\|t ?}}', 'g'),
-        options = {};
+    var options = {};
 
     grunt.registerMultiTask('gettext_parser', 'Extract gettext calls to a single file.', function() {
         // Merge task-specific and/or target-specific options with these defaults.
@@ -37,15 +36,17 @@ module.exports = function(grunt) {
 
             files.forEach(function(filepath) {
                 var i,
-                    filecalls = parser.parseCalls(grunt.file.read(filepath));
+                    filecalls = parser.parse(grunt.file.read(filepath));
 
                 for (i in filecalls) {
                     calls.push(filecalls[i]);
                 }
             });
 
-            output += calls.join(';\n');
-            output += ';\n';
+            if (calls.length) {
+                output += calls.join(';\n');
+                output += ';\n';
+            }
 
             // Write the destination file.
             grunt.file.write(f.dest, output);
@@ -75,6 +76,8 @@ module.exports = function(grunt) {
      */
     function getParser(style) {
         switch (style) {
+            case 'i18n':
+                return new ParserI18n(options);
             case 'drupal':
                 return new ParserDrupal(options);
             default:

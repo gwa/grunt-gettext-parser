@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             textdomain: 'bar',
         },
         files: {
-          'tmp/wordpress.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+          'tmp/wordpress.php': ['test/fixtures/index.twig', 'test/fixtures/wp/*.php']
         }
       },
 
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
             add_textdomain: true
         },
         files: {
-          'tmp/wordpress_add_textdomain.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+          'tmp/wordpress_add_textdomain.php': ['test/fixtures/index.twig', 'test/fixtures/wp/*.php']
         }
       },
 
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             output_function: 'fooMethod',
         },
         files: {
-          'tmp/wordpress_custom_function.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+          'tmp/wordpress_custom_function.php': ['test/fixtures/index.twig', 'test/fixtures/wp/*.php']
         }
       },
 
@@ -54,7 +54,16 @@ module.exports = function(grunt) {
             style: 'drupal',
         },
         files: {
-          'tmp/drupal.php': ['test/fixtures/**/*.twig', 'test/fixtures/wp/*.php']
+          'tmp/drupal.php': ['test/fixtures/drupal.twig']
+        }
+      },
+
+      i18n: {
+        options: {
+            style: 'i18n',
+        },
+        files: {
+          'tmp/i18n.php': ['test/fixtures/i18n.twig']
         }
       }
     },

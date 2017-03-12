@@ -8,7 +8,7 @@ function Parser(options) {
      * @param {String} source
      * @return {Array}
      */
-    function parseCalls(source) {
+    function parse(source) {
         var match,
             calls = [];
 
@@ -50,8 +50,9 @@ function Parser(options) {
     }
 
     return {
-        parseCalls: parseCalls
+        parse: parse
     };
+
 }
 
 module.exports = Parser;
