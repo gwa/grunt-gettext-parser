@@ -108,7 +108,7 @@ grunt.initConfig({
 
 #### style
 
-`wordpress` (default) or `drupal`.
+`wordpress` (default) `i18n`, or `drupal`.
 
 #### textdomain
 
