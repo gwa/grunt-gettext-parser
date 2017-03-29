@@ -47,6 +47,16 @@ exports.gettext_parser = {
     test.done();
   },
 
+  textdomain_null: function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/wordpress_textdomain_null.php');
+    var expected = grunt.file.read('test/expected/wordpress_textdomain_null.php');
+    test.equal(actual, expected, 'extracts all strings when textdomain is NULL.');
+
+    test.done();
+  },
+
   add_textdomain: function(test) {
     test.expect(1);
 

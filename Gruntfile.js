@@ -29,6 +29,13 @@ module.exports = function(grunt) {
         }
       },
 
+      wordpress_textdomain_null: {
+        options: {},
+        files: {
+          'tmp/wordpress_textdomain_null.php': ['test/fixtures/index.twig', 'test/fixtures/wp/*.php']
+        }
+      },
+
       wordpress_add_textdomain: {
         options: {
             textdomain: 'bar',
