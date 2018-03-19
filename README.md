@@ -98,7 +98,9 @@ grunt.initConfig({
                 // Changes the name of the rendered function. Defaults to `gettext`.
                 output_function: 'myFunction'
             },
-            'path/to/output.php': ['views/**/*.twig']
+            files: {
+                'path/to/output.php': ['views/**/*.twig']
+            }
         },
     },
 });
